@@ -14,7 +14,12 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title><?php $this->options->title() ?></title>
+    <?php if ($this->is('index')): ?>
+    <title><?php $this->options->title() ?> | <?php $this->options->description() ?></title>
+    <?php else: ?>
+    <title><?php $this->title() ?> | <?php $this->options->description() ?></title>
+    <?php endif; ?>
+    <?php $this->header(); ?>
     <meta name="HandheldFriendly" content="True" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="shortcut icon" href="<?echo empty($this->options->logo)?'//wx1.sinaimg.cn/mw690/0072WRWsly1g0u4z5187kj305p05pwes.jpg':$this->options->logo;?>">

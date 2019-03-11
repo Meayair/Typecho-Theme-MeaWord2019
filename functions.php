@@ -1,4 +1,5 @@
 <?php
+require_once("libs/tools.php");
 function themeFields($layout) {
     $author = new Typecho_Widget_Helper_Form_Element_Text('author', NULL, NULL, _t('原作者'), _t('填写作者名或原创或空'));
     $layout->addItem($author);
@@ -25,64 +26,5 @@ function themeConfig($form) {
     
     $links = new Typecho_Widget_Helper_Form_Element_Text('links', NULL, '<li><a target="_blank" href="https://www.meayair.com/">Meayair博客</a></li>', _t('友情链接'), _t('填写友情链接（需用li和a标签包住）'));
     $form->addInput($links);
-}
-function getRandomPosts($limit = 1){    
-    $db = Typecho_Db::get();
-    $result = $db->fetchAll($db->select()->from('table.contents')
-		->where('status = ?','publish')
-		->where('type = ?', 'post')
-		->where('created <= unix_timestamp(now())', 'post')
-		->limit($limit)
-		->order('RAND()')
-	);
-	if($result){
-		foreach($result as $val){
-			$val = Typecho_Widget::widget('Widget_Abstract_Contents')->push($val);
-			$post_title = htmlspecialchars($val['title']);
-			$permalink = $val['permalink'];
-			echo $permalink;
-		}
-	}
-}
-function theNext($widget, $default = NULL)
-{
-$db = Typecho_Db::get();
-$sql = $db->select()->from('table.contents')
-->where('table.contents.created > ?', $widget->created)
-->where('table.contents.status = ?', 'publish')
-->where('table.contents.type = ?', $widget->type)
-->where('table.contents.password IS NULL')
-->order('table.contents.created', Typecho_Db::SORT_ASC)
-->limit(1);
-$content = $db->fetchRow($sql);
- 
-if ($content) {
-$content = $widget->filter($content);
-$link =  $content['permalink'];
-$dis .= $link;
-} else {
-$dis .= $default;
-}
-return $dis;
-}
-function thePrev($widget, $default = NULL)
-{
-$db = Typecho_Db::get();
-$sql = $db->select()->from('table.contents')
-->where('table.contents.created < ?', $widget->created)
-->where('table.contents.status = ?', 'publish')
-->where('table.contents.type = ?', $widget->type)
-->where('table.contents.password IS NULL')
-->order('table.contents.created', Typecho_Db::SORT_DESC)
-->limit(1);
-$content = $db->fetchRow($sql); 
-if ($content) {
-$content = $widget->filter($content);
-$link = $content['permalink'];
-$dis .= $link;
-} else {
-$dis .= $default;
-}
-return $dis;
 }
 ?>
