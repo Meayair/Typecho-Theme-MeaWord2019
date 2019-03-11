@@ -1,6 +1,7 @@
 # Typecho-Theme-MeaWord
 一个极简的用于文字摘录的主题
-*演示站：https://word.meayair.com
+
+* 演示站：https://word.meayair.com
 
 ---
 
